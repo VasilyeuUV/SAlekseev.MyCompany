@@ -1,4 +1,4 @@
-﻿namespace SAlekseev.MyCompany.Models;
+﻿namespace SAlekseev.MyCompany.Infrastructure;
 
 public class AppConfig
 {
