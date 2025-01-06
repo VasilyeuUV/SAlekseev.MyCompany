@@ -1,0 +1,13 @@
+﻿
+
+@* Внедряем средство работы с appconfig.json, которое представляет собой пары ключ-значение из этого файла *@
+@inject IConfiguration config;
+@{
+    AppConfig? appConfig = config.GetSection("Project")         // - забираем из appsettings.json секцию "Project"
+                                 .Get<AppConfig>();             // - и маппим ее в класс AppConfig
+}
+
+<link rel="shortcut icon" href="~/img/favicon.ico"/>                        @*Добавляем иконку*@
+<title>@(ViewBag.Title ?? appConfig?.Company.CompanyName)"</title>          @*ViewBag - стандартный контейнер для транспортировки данных*@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
