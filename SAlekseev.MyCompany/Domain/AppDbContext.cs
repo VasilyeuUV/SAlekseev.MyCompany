@@ -21,7 +21,7 @@ public class AppDbContext : IdentityDbContext<CustomIdentityUser>     // - Custo
     }
 
     public DbSet<ServiceCategory> ServiceCategories { get; set; } = null!;
-    public DbSet<Service> ServiceCs { get; set; } = null!;
+    public DbSet<Service> Services { get; set; } = null!;
 
 
     /// <summary>
