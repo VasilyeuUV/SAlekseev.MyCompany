@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using SAlekseev.MyCompany.Domain;
 using SAlekseev.MyCompany.Infrastructure;
 
 namespace SAlekseev.MyCompany;
@@ -17,6 +20,12 @@ public class Program
         // Оборачиваем секцию Project в объектную форму для удобства
         IConfiguration configuration = configBuilder.Build();
         AppConfig config = configuration.GetSection("Project").Get<AppConfig>()!;           // - забираем секцию Project из appsettings.json и мапим ее в класс AppConfig
+
+        // Подключение контекста БД
+        builder.Services.AddDbContext<AppDbContext>(x =>
+            x.UseSqlServer(config.DataBase.ConnectionString)
+            .ConfigureWarnings(warnings => 
+                warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));            // - в версии EF Core 9.0.0 был баг без ошибки, поэтому подавляем (игнорируем) предупреждения
 
         // Подключаем функционал контроллеров (переходим в режим MVC)
         builder.Services.AddControllersWithViews();
