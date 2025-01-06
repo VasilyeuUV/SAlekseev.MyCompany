@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using SAlekseev.MyCompany.Domain;
+using SAlekseev.MyCompany.Domain.Entities;
+using SAlekseev.MyCompany.Domain.Repositories.Abstracts;
+using SAlekseev.MyCompany.Domain.Repositories.EntityFramework;
 using SAlekseev.MyCompany.Domain.Users;
 using SAlekseev.MyCompany.Infrastructure;
 
@@ -28,6 +31,12 @@ public class Program
             x.UseSqlServer(config.DataBase.ConnectionString)
             .ConfigureWarnings(warnings =>
                 warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));            // - в версии EF Core 9.0.0 был баг без ошибки, поэтому подавляем (игнорируем) предупреждения
+
+        // Подключение (регистрация) репозиториев и менеджера репозиториев.
+        builder.Services
+            .AddTransient<IServiceCategoriesRepository, EFServiceCategoriesRepository>()
+            .AddTransient<IServicesRepository, EFServicesRepository>()
+            .AddTransient<DataManager>();
 
         // Настраиваем систему идентификации (чтобы можно было залогиниться)
         builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>(options =>
