@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE HTML>
 <html>
 <head>
-    @await Html.PartialAsync(nameof(Views_Shared__MetaPartial));
-    @await Html.PartialAsync(nameof(Views_Shared__CssPartial));
+    @await Html.PartialAsync("_MetaPartial")
+    @await Html.PartialAsync("_CssPartial")
 </head>
 <body class="left-sidebar is-preload">
     <div id="page-wrapper">
-        @await Html.PartialAsync(nameof(Views_Shared__HeaderPartial));
+        @await Html.PartialAsync("_HeaderPartial")
         <div id="main-wrapper">
             <div class="wrapper style2">
                 <div class="inner">
@@ -18,8 +18,8 @@
                 </div>
             </div>
         </div>
-        @await Html.PartialAsync(nameof(Views_Shared__FooterPartial));
+        @await Html.PartialAsync("_FooterPartial")
     </div>
-    @await Html.PartialAsync(nameof(Views_Shared__ScriptsPartial));
+    @await Html.PartialAsync("_ScriptsPartial")
 </body>
 </html>
