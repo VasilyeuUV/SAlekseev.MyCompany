@@ -1,15 +1,42 @@
-namespace SAlekseev.MyCompany
+using SAlekseev.MyCompany.Infrastructure;
+
+namespace SAlekseev.MyCompany;
+
+public class Program
 {
-    public class Program
+    public static async Task Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            app.MapGet("/", () => "Hello World!");
+        // Подключаем в конфигурацию файл appsettings.json
+        IConfigurationBuilder configBuilder = new ConfigurationBuilder()
+            .SetBasePath(builder.Environment.ContentRootPath)                               // - путь, в котором находятся все файлы приложения
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)         // - подключаем файл appsettings.json (подключать обязательно и перегружать при его изменении)
+            .AddEnvironmentVariables();                                                     // - подключаем переменные окружения.
 
-            app.Run();
-        }
+        // Оборачиваем секцию Project в объектную форму для удобства
+        IConfiguration configuration = configBuilder.Build();
+        AppConfig config = configuration.GetSection("Project").Get<AppConfig>()!;           // - забираем секцию Project из appsettings.json и мапим ее в класс AppConfig
+
+        // Подключаем функционал контроллеров (переходим в режим MVC)
+        builder.Services.AddControllersWithViews();
+
+        // Собираем конфигурацию
+        WebApplication app = builder.Build();
+
+
+
+        // !!! Порядок следования middleware очень важен. они будут выполняться согласно нему !!!
+
+        // - Подключаем использование любых статичных файлов (js, css, ...)? в т.ч. и из папки wwwroot
+        app.UseStaticFiles();
+
+        // - Подключаем систему маршрутизации (чтобы корректно обрабатывались контроллеры)
+        app.UseRouting();
+
+        // - Регистирируем нужные маршруты
+        app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");       // - маршрут по умолчанию
+
+        await app.RunAsync();
     }
 }
