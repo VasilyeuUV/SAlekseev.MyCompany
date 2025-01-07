@@ -11,7 +11,7 @@ public partial class AdminController
     /// <summary>
     /// Действие при создании/редактировании Категории услуг.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Идентификатор Категории услуг</param>
     /// <returns></returns>
     public async Task<IActionResult> ServiceCategoriesEdit(int id)
     {
