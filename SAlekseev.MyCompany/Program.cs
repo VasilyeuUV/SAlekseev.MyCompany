@@ -56,7 +56,7 @@ public class Program
             {
                 options.Cookie.Name = "myCompanyAuth";                  // - название куки
                 options.Cookie.HttpOnly = true;                         // - к этим кукам запрещен доступ из сторонних средств, например js-скриптов в браузере пользователя, т.к. эти куки отвечают за безопасность, а только по http
-                options.LoginPath = "/admin/login";                     // - прежде чем попасть в панель администратора, необходимо залогинится. Этот путь открывает страницу, чтобы залогинится. Логин/пароль были заданы в appsetting.json и использованы при создании базы данных.
+                options.LoginPath = "/account/login";                   // - прежде чем попасть в панель администратора, необходимо залогинится. Этот путь открывает страницу, чтобы залогинится. Логин/пароль были заданы в appsetting.json и использованы при создании базы данных.
                 options.AccessDeniedPath = "/admin/accessdenied";       // - 
                 options.SlidingExpiration = true;                       // - 
             });
