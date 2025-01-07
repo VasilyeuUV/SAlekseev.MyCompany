@@ -27,8 +27,10 @@ public partial class AdminController : Controller
     /// Главное действие по умолчанию.
     /// </summary>
     /// <returns></returns>
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        ViewBag.ServiceCategories = await _dataManager.ServiceCategories.GetServiceCategoriesAsync();
+        ViewBag.Services = await _dataManager.Services.GetServicesAsync();
         return View();                          // - возврат одноименного контроллеру представления.
     }
 }
