@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAlekseev.MyCompany.Domain;
 
@@ -34,6 +36,19 @@ public partial class AdminController : Controller
         ViewBag.ServiceCategories = await _dataManager.ServiceCategories.GetServiceCategoriesAsync();
         ViewBag.Services = await _dataManager.Services.GetServicesAsync();
         return View();                          // - возврат одноименного контроллеру представления.
+    }
+
+
+    /// <summary>
+    /// Метод для скрипта TinyMCE для сохранения изображений
+    /// </summary>
+    /// <returns></returns>
+    public async Task<string> SaveEditorImg()
+    {
+        IFormFile img = Request.Form.Files[0];
+        await SaveImg(img);
+
+        return JsonSerializer.Serialize(new {location = Path.Combine("/img/", img.FileName)});      // - вернуть путь к файлу в браузер пользователя.
     }
 
 
