@@ -1,0 +1,23 @@
+﻿@inject IConfiguration config
+@{
+    AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
+    string title = "Контакты";
+    ViewBag.Title = title;
+}
+@await Html.PartialAsync("_SidebarPartial")         @*Подключаем сайдбар*@
+
+<div class="col-8 col-12-medium imp-medium">        @*классы из макета*@
+    <div id="content">
+        <article>
+            <header class="major">
+                <h2>@title</h2>
+            </header>
+            <div>
+                Телефон: <span class="text-bold"><a href="tel:@appConfig?.Company.CompanyPhoneShort">@appConfig?.Company.CompanyPhone</a></span>
+            </div>
+            <div>
+                Email: <span class="text-bold"><a href="mailto:@appConfig?.Company.CompanyEmail">@appConfig?.Company.CompanyEmail</a></span>
+            </div>
+        </article>
+    </div>
+</div>
