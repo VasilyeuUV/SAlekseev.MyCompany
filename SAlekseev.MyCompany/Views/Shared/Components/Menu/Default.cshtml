@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ServiceDto>
+
+<nav id="nav">
+    <ul>
+        <li>
+            <a asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
+            <ul>
+                @foreach (ServiceDto entity in Model)
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Services" asp-action="Show" asp-row-id="@entity.Id">@entity.Title</a>
+                    </li>
+                }
+            </ul>
+        </li>
+        <li class="current_page_item">
+            <a asp-area="" asp-controller="Home" asp-action="Contacts">Контакты</a>
+        </li>
+    </ul>
+</nav> 
