@@ -15,15 +15,19 @@ public partial class AdminController : Controller
 {
     private readonly DataManager _dataManager;
     private readonly IWebHostEnvironment _hostingEnviroment;        // - для определения путей на сервере.
-
+    private readonly ILogger<AdminController> _logger;
 
     /// <summary>
     /// CTOR
     /// </summary>
-    public AdminController(DataManager dataManager, IWebHostEnvironment hostingEnviroment)
+    public AdminController(
+        DataManager dataManager, 
+        IWebHostEnvironment hostingEnviroment,
+        ILogger<AdminController> logger)
     {
         _dataManager = dataManager;
         _hostingEnviroment = hostingEnviroment;
+        _logger = logger;
     }
 
 

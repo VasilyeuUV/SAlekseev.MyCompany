@@ -33,6 +33,8 @@ public partial class AdminController
         }
 
         await _dataManager.ServiceCategories.SaveServiceCategoryAsync(entity);
+        _logger.LogInformation($"Добавлена/обновлена категория услуги с ID: {entity.Id}");
+
         return RedirectToAction("Index");                                               // - возвращаем на главную страницу админки.
     }
 
@@ -43,6 +45,8 @@ public partial class AdminController
         // TODO: Т.к. в целях юезопасности отключено каскадное удаление, то прежде чем удалить категорию, убедимся, что на нее нет ссылки ни у одной из услуг
 
         await _dataManager.ServiceCategories.DeleteServiceCategoryAsync(id);
+        _logger.LogInformation($"Удалена категория услуги с ID: {id}");
+
         return RedirectToAction("Index");                                               // - возвращаем на главную страницу админки.
     }
 

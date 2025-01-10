@@ -7,6 +7,7 @@ using SAlekseev.MyCompany.Domain.Repositories.Abstracts;
 using SAlekseev.MyCompany.Domain.Repositories.EntityFramework;
 using SAlekseev.MyCompany.Domain.Users;
 using SAlekseev.MyCompany.Infrastructure;
+using Serilog;
 
 namespace SAlekseev.MyCompany;
 
@@ -66,12 +67,23 @@ public class Program
         // Подключаем функционал контроллеров (переходим в режим MVC)
         builder.Services.AddControllersWithViews();
 
+        // Регистрируем логгер Serilog
+        builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
         // Собираем конфигурацию
         WebApplication app = builder.Build();
 
 
-
         // !!! Порядок следования middleware очень важен. они будут выполняться согласно нему !!!
+
+        // - Подключаем использование логгера Serilog
+        app.UseSerilogRequestLogging();
+
+        // - Подключаем обработку исключений
+        if (app.Environment.IsDevelopment())                // - если находимся в среде разработки
+        {
+            app.UseDeveloperExceptionPage();                // - подключаем более подробную информацию об исключениях 
+        }
 
         // - Подключаем использование любых статичных файлов (js, css, ...)? в т.ч. и из папки wwwroot
         app.UseStaticFiles();
