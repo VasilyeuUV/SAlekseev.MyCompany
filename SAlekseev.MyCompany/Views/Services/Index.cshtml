@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ServiceDto>
+@{
+    string title = "Наши услуги";
+    ViewBag.Title = title;
+}
+
+@await Html.PartialAsync("_Sidebarpartial")
+<div class="col-8 col-12-medium imp-medium">
+    <div id="content">
+        @if (Model.Any())
+        {
+            <section class="box article-list">
+                <h2 class="icon fa-file-alt">
+                    @title
+                </h2>
+                @foreach (ServiceDto entity in Model)
+                {
+                    <article class="box excerpt">
+                        <a asp-area="" asp-controller="Services" asp-action="Show" asp-route-id="@entity.Id" class="image left image-service-list">
+                            <img src="~/img/@entity.PhotoFileName" alt="" />
+                        </a>
+                        <div>
+                            <header>
+                                <h3>
+                                    <a asp-area="" asp-controller="Services" asp-action="Show" asp-route-id="@entity.Id">
+                                        @entity.Title
+                                    </a>
+                                </h3>
+                            </header>
+                            @if (entity.CategoryName != null)
+                            {
+                                <div>
+                                    Категория: <span class="text-bold">@entity.CategoryName</span>
+                                </div>
+                            }
+                            <p>
+                                @entity.DescriptionShort
+                            </p>
+                        </div>
+                    </article>
+                }
+            </section>
+        }
+    </div>
+</div>

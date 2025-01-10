@@ -1,7 +1,7 @@
 ﻿@inject IConfiguration config
 @{
     AppConfig? appConfig = config.GetSection("Project").Get<AppConfig>();
-    string title = "Контакты";
+    string title = "Контактная информация";
     ViewBag.Title = title;
 }
 @await Html.PartialAsync("_SidebarPartial")         @*Подключаем сайдбар*@

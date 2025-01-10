@@ -19,7 +19,7 @@ public static class DtoHelper
         ServiceDto entityDto = new ServiceDto()
         {
             Id = entity.Id,
-            CategoryNamed = entity.ServiceCategory?.Title,
+            CategoryName = entity.ServiceCategory?.Title,
             Title = entity.Title,
             DescriptionShort = entity.DescriptionShort,
             Description = entity.Description,
