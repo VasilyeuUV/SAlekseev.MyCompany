@@ -1,0 +1,32 @@
+﻿@model ServiceDto
+@{
+    string? title = Model.Title;
+    ViewBag.Title = title;
+}
+
+@await Html.PartialAsync("_Sidebarpartial")
+<div class="col-8 col-12-medium imp-medium">
+    <div id="content">
+        <h2 class="service-item">
+            @title
+        </h2>
+        @if (Model.CategoryName != null)
+        {
+            <div>
+                Категория: <span class="text-bold">@Model.CategoryName</span>
+            </div>
+        }
+        <div class="service-item">
+            Тип услуги: <span class="text-bold">@Model.Type</span>
+        </div>
+        <div class="service-item">
+            <img src="~/img/@Model.PhotoFileName" class="img-block" />
+        </div>
+        <div class="service-item">
+            @Model.DescriptionShort
+        </div>
+        <div class="service-item">
+            @Html.Raw(Model.Description)     @*Raw - вывести содержимое в том виде, в котором оно есть. НЕ ЭКРАНИРУЕТ ОПАСНЫЕ ТЕГИ!!! Можно выполнить script!*@
+        </div>
+    </div>
+</div>

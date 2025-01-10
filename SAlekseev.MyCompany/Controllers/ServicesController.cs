@@ -38,4 +38,25 @@ public class ServicesController : Controller
 
         return View(listDto);
     }
+
+
+    /// <summary>
+    /// Страница выбранной Услуги
+    /// </summary>
+    /// <returns></returns>
+    public async Task<IActionResult> Show(int id)
+    {
+        Service? entity = await _dataManager.Services.GetServiceByIdAsync(id);
+
+        // Если услуги с данным Id не найдено, отвечаем кодом 404 
+        if (entity == null)
+        {
+            return NotFound();
+        }
+
+        // Доменную сущность на клиенте не используем.
+        ServiceDto entityDto = DtoHelper.TransformService(entity);
+
+        return View(entityDto);
+    }
 }
